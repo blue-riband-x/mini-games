@@ -679,10 +679,16 @@ Boulderdash = function() {
 
     resize: function() {
       var visibleArea = { w: 40, h: 23 };            // 40x22 + 1 row for score at top - TODO: scrollable area
-      this.canvas.width  = this.canvas.clientWidth;  // set canvas logical size equal to its physical size
-      this.canvas.height = this.canvas.clientHeight; // (ditto)
-      this.dx = this.canvas.width  / visibleArea.w;  // calculate pixel size of a single game cell
-      this.dy = this.canvas.height / visibleArea.h;  // (ditto)
+      var cssWidth  = this.canvas.clientWidth;
+      var cssHeight = this.canvas.clientHeight;
+      /* Render at device resolution so the cave stays crisp on retina screens,
+         and snap the cell size to whole pixels to avoid tile seams. */
+      var dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 3));
+      this.dx = Math.max(1, Math.round(cssWidth  * dpr / visibleArea.w));
+      this.dy = Math.max(1, Math.round(cssHeight * dpr / visibleArea.h));
+      this.canvas.width  = this.dx * visibleArea.w;
+      this.canvas.height = this.dy * visibleArea.h;
+      this.ctx.imageSmoothingEnabled = false;
       this.invalidateScore();
       this.invalidateCave();
     }

@@ -18,7 +18,6 @@
  */
 
 /* Configuration of the menu */
-const ELEMENT_MENU_ELEMENTS_PER_ROW = 4;
 const PEN_SIZES = [2, 4, 8, 16, 32, 64];
 const PEN_SIZE_LABELS = ["1px", "2px", "4px", "8px", "16px", "32px"];
 const DEFAULT_PEN_IDX = 1;
@@ -87,9 +86,6 @@ menuAltColors[WELL] = "rgb(158, 13, 33)";
 menuAltColors[SOIL] = "rgb(171, 110, 53)";
 
 function initMenu() {
-  /* The wrapper div that holds the entire menu */
-  const menu = document.getElementById("menuWrapper");
-
   /* Set up the container that holds the element selectors */
   const elementMenu = document.getElementById("elementTable");
   var i, k;
