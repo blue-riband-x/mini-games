@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini Games · Ricky</title>
+<meta name="author" content="Ricky">
+<meta name="description" content="四个能直接在浏览器里玩的小游戏：太空塔防、跑打射击、推石解谜、落沙沙盒。">
+<style>
+  :root {
+    --bg: #05080d;
+    --panel: #0a121b;
+    --line: #1b2c3a;
+    --line-hi: #2f6f6a;
+    --text: #d8e6ef;
+    --dim: #6f8899;
+    --accent: #5eead4;
+    --accent-2: #f2b544;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(900px 460px at 18% -10%, rgba(94, 234, 212, .10), transparent 70%),
+      radial-gradient(760px 420px at 92% 8%, rgba(242, 181, 68, .07), transparent 70%),
+      var(--bg);
+    color: var(--text);
+    font-family: "Sora", -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 20px 64px;
+  }
+  .mono { font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace; }
+
+  header { width: 100%; max-width: 1040px; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: .34em; text-transform: uppercase;
+    color: var(--dim);
+  }
+  h1 {
+    margin: 10px 0 0;
+    font-size: clamp(30px, 6vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .sub {
+    margin: 14px 0 0;
+    max-width: 46ch;
+    font-size: 14px; line-height: 1.85; color: #8ba3b3;
+  }
+  .rule {
+    margin: 26px 0 0; height: 1px; width: 100%;
+    background: linear-gradient(90deg, var(--line-hi), var(--line) 55%, transparent);
+  }
+
+  main {
+    width: 100%; max-width: 1040px;
+    margin-top: 30px;
+    display: grid; gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+  }
+  a.card {
+    position: relative;
+    display: flex; flex-direction: column;
+    padding: 20px 18px 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    text-decoration: none; color: inherit;
+    transition: border-color .18s, transform .18s, background .18s;
+    overflow: hidden;
+  }
+  a.card::before {
+    content: ""; position: absolute; inset: 0 0 auto; height: 2px;
+    background: var(--tone, var(--accent));
+    opacity: .55; transition: opacity .18s;
+  }
+  a.card:hover, a.card:focus-visible {
+    border-color: var(--tone, var(--accent));
+    background: #0c1620;
+    transform: translateY(-2px);
+    outline: none;
+  }
+  a.card:hover::before, a.card:focus-visible::before { opacity: 1; }
+
+  .no { font-size: 11px; letter-spacing: .22em; color: var(--dim); }
+  .name {
+    margin: 12px 0 0; font-size: 20px; line-height: 1.25; font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .name small { display: block; margin-top: 3px; font-size: 11.5px; font-weight: 400; color: var(--dim); letter-spacing: .06em; }
+  .desc {
+    margin: 10px 0 0; flex: 1;
+    font-size: 12.5px; line-height: 1.75; color: #7e94a4;
+  }
+  .tags { margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span {
+    font-size: 10.5px; line-height: 1; padding: 5px 7px;
+    border: 1px solid #22374a; border-radius: 2px; color: #86a0b2;
+  }
+  .go {
+    margin: 16px 0 0; display: flex; align-items: center; gap: 7px;
+    font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--tone, var(--accent));
+  }
+  .go i {
+    display: inline-block; width: 7px; height: 7px;
+    background: currentColor;
+    transition: transform .18s;
+  }
+  a.card:hover .go i { transform: translateX(4px); }
+
+  footer {
+    width: 100%; max-width: 1040px; margin-top: 40px;
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline;
+    justify-content: space-between;
+    font-size: 11.5px; color: #55697a;
+  }
+  footer a { color: #7e94a4; text-decoration: none; border-bottom: 1px solid #23384a; }
+  footer a:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow mono">Mini Games / Static / No Build</div>
+  <h1>四个小游戏，<em>打开就能玩</em></h1>
+  <p class="sub">
+    都是纯静态页面，没有后端、没有构建步骤，浏览器直接跑。四种完全不同的玩法：
+    塔防、跑打射击、推石解谜、落沙沙盒。
+  </p>
+  <div class="rule"></div>
+</header>
+
+<main>
+  <a class="card" href="tower-defense/game.html" style="--tone:#5eead4">
+    <div class="no mono">01 / STRATEGY</div>
+    <h2 class="name">EXO 深空防线<small>Exo · Tower Defense</small></h2>
+    <p class="desc">在陌生星球的轨道上建基地、架炮塔，扛住一波比一波凶的进攻。资源只有矿物和能量两种，花在哪条线上决定你能不能活过第十波。</p>
+    <div class="tags"><span>塔防</span><span>鼠标操作</span><span>13 KB 单文件</span></div>
+    <div class="go mono">进入 <i></i></div>
+  </a>
+
+  <a class="card" href="space-huggers/index.html" style="--tone:#f2b544">
+    <div class="no mono">02 / ACTION</div>
+    <h2 class="name">Space Huggers<small>Run &amp; Gun Roguelike</small></h2>
+    <p class="desc">横版跑打，地形可以炸开，墙被打穿后会露出后面的敌人。九条命、四波杂兵、一个会追着你打的关底，死一次地图重排。</p>
+    <div class="tags"><span>射击</span><span>键盘 · 手柄</span><span>可破坏地形</span></div>
+    <div class="go mono">进入 <i></i></div>
+  </a>
+
+  <a class="card" href="boulder-dash/index.html" style="--tone:#9db4c8">
+    <div class="no mono">03 / PUZZLE</div>
+    <h2 class="name">Boulder Dash<small>Dig · Push · Survive</small></h2>
+    <p class="desc">挖开泥土找宝石，推动石头开路，但石头会往下掉 —— 掉在你头上就没了。每关要拿够宝石才能开出口，限时。</p>
+    <div class="tags"><span>解谜</span><span>方向键</span><span>C64 经典</span></div>
+    <div class="go mono">进入 <i></i></div>
+  </a>
+
+  <a class="card" href="project-sand/index.html" style="--tone:#e8845f">
+    <div class="no mono">04 / SANDBOX</div>
+    <h2 class="name">Project Sand<small>Falling Sand Simulator</small></h2>
+    <p class="desc">没有输赢的物理沙盒：沙子会堆、水会流、火会烧、酸会溶。二十多种元素互相反应，笔刷一画就能搭出一整套连锁。</p>
+    <div class="tags"><span>沙盒</span><span>鼠标绘制</span><span>元素反应</span></div>
+    <div class="go mono">进入 <i></i></div>
+  </a>
+</main>
+
+<footer>
+  <div>© 2026 Ricky · 四个项目都在仓库 <a href="https://github.com/blue-riband-x/mini-games" target="_blank" rel="noreferrer">mini-games</a> 里，来源与许可见 <a href="THIRD-PARTY.md">THIRD-PARTY.md</a></div>
+  <div class="mono">NO SERVER · NO BUILD · PURE STATIC</div>
+</footer>
+
+</body>
+</html>
