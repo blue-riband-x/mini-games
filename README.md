@@ -6,7 +6,7 @@
 
 | 目录 | 玩法 | 操作 | 体积 |
 |---|---|---|---|
-| `tower-defense/` | 太空塔防，建塔扛波次 | 鼠标 | 单文件 13 KB |
+| `tower-defense/` | 太空塔防，建塔扛波次 | 鼠标 | 156 KB 源码 |
 | `space-huggers/` | 横版跑打射击，地形可破坏 | 键盘 / 手柄 | 360 KB |
 | `boulder-dash/` | 挖宝石推石头，限时逃脱 | 方向键 | 141 KB |
 | `project-sand/` | 落沙物理沙盒，元素互相反应 | 鼠标 | 336 KB |
@@ -24,7 +24,7 @@ python -m http.server 8080
 
 ```
 index.html          入口页，四张卡片
-tower-defense/      build 产物（game.html）+ 可读源码（src/）
+tower-defense/      未压缩源码，入口 index.html
 space-huggers/      游戏逻辑（app*.js）+ LittleJS 引擎（engine/）
 boulder-dash/       关卡数据（caves.js）+ 渲染与逻辑
 project-sand/       元素规则（scripts/）+ 画布渲染

@@ -1,8 +1,32 @@
-# td13k
-Tower Defense under 13kb when minified and zipped for http://js13kgames.com
+# EXO 深空防线
 
-follow us on twitter for updates on Exo:
+一个太空塔防：母星在正中，敌人从环外压进来，在轨道上架炮塔、铺激光、插减速场，撑过一波比一波密的进攻。
+资源只有矿物和能量两种 —— 建塔花矿物、开火吃能量。
 
-https://twitter.com/ai_Doge
+打开 `index.html` 即可（需要通过 http 访问，`file://` 下音频会被拦）。
 
-https://twitter.com/f_oatley
+## 玩法
+
+- 底部图标选塔型，点轨道上的位置放置；
+- 左上是母星状态，右上角是矿物与能量产出，中间的倒计时是下一波；
+- 右下角可以关掉教程、音乐、音效与旁白。
+
+## 结构
+
+```
+index.html          入口，按顺序加载下面这些脚本
+constants.js        常量与调色
+game.js             主循环、状态切换
+orbital.js          轨道与模块挂载
+WaveManager.js      波次节奏与难度曲线
+objects/            塔、敌人、弹道、爆炸、设置、存档、教程
+data/               精灵图（逐像素生成）、音效与音乐
+lib/                音频合成（player-small.js）
+```
+
+精灵不走图片文件，全部在 `data/spr*.js` 里用像素数组在运行时画出来 —— 所以整个游戏没有一张 png。
+
+## 来源
+
+基于 [scorp200/td13k](https://github.com/scorp200/td13k)（原作者 scorp200，MIT，js13kGames 参赛作品）改造：
+把压缩后的单文件拆回可读源码、改掉标题画面的署名、补了这份说明。玩法与数值未改动。许可见 `LICENSE`。

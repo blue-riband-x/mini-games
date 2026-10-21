@@ -77,8 +77,8 @@ var LoadingScreen = (function() {
 
         ctx.font = "small-caps 700 16px monospace";
         ctx.fillText("Created by", centerX, Canvas.height-148);
-        ctx.fillText("ai Doge & Jack Oatley", centerX, Canvas.height-128);
-		ctx.fillText("with music by Francis Fonye", centerX, Canvas.height-108);
+        ctx.fillText("Ricky", centerX, Canvas.height-128);
+		ctx.fillText("original EXO by ai Doge & Jack Oatley", centerX, Canvas.height-108);
         ctx.fillText("for #js13k", centerX, Canvas.height-88);
 		ctx.fillText("made with; Atom & SoundBox", centerX, Canvas.height-48);
 		ctx.fillText("works best in Chrome, quality in other browsers will vary!", centerX, Canvas.height-28);

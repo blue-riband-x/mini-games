@@ -1,4 +1,4 @@
-![Space Huggers - A JS13k Game by Frank Force](/screenshot.png)
+![Space Huggers - A JS13k Game by Ricky](/screenshot.png)
 
 The empire is spreading like a plague across the galaxy and building outposts on remote planets.
 You are an elite rebel soldier tasked with wiping out those bases.
@@ -93,3 +93,8 @@ Good luck, have fun, and give space a hug for me.
 - Run engine\build\build.bat, to build app.zip which is the final result
 - It will also create a file called index.min.html you can use for testing
 - The zip size may vary by 20 bytes or so due to randomness of roadroller
+
+---
+
+Original game: [KilledByAPixel/SpaceHuggers](https://github.com/KilledByAPixel/SpaceHuggers) by Frank Force (GPL-3.0).
+This copy is a modified version — 署名与页面标题已改，游戏逻辑未改。详见根目录 THIRD-PARTY.md。
