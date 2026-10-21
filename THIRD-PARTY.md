@@ -14,8 +14,10 @@
 
 改动：
 
-- `game.html` 由原仓库的 `build/index.html` 迁移而来，补了 `<title>` 与作者 meta；
-- 保留 `src/` 下未压缩的可读源码（原仓库的 `compile.sh` 用 Closure Compiler 打包）；
+- 放弃原仓库 `build/` 下 Closure Compiler 压缩出的单文件，改用 `src/` 的未压缩源码发布
+  （入口 `tower-defense/index.html`），方便阅读和调试；
+- `loadingscreen.js` 标题画面的署名改为 Ricky，并保留一行 `original EXO by ai Doge & Jack Oatley`；
+- 补了 `tower-defense/README.md`；
 - 未改动任何游戏逻辑与数值。
 
 ## 2. space-huggers — Space Huggers
