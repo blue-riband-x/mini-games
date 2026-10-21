@@ -1,9 +1,12 @@
 <!DOCTYPE html> 
-<html>
+<html lang="zh-CN">
 <head>
-  <title>Javascript Boulderdash Instructions</title>
+  <title>Boulder Dash · 图鉴与说明</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link href="boulderdash.css" media="screen, print" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="../shared/mg.css">
+  <script src="../shared/mg.js"></script>
 </head> 
 
 <body> 
@@ -11,37 +14,83 @@
   <div id="boulderdash">
 
     <div id="header">
-      <span id="description">Boulderdash Instructions...</span>
-      <a id="back" href="index.html">back to game</a>
+      <span id="description" data-t-zh="图鉴与说明" data-t-en="Field guide">Boulderdash Instructions...</span>
+      <a id="back" href="index.html" data-t-zh="返回游戏" data-t-en="back to game">back to game</a>
     </div>
 
     <div id="instructions">
 
-
       <ul>
-        <li><img src='help/rockford.gif'><b>Rockford</b>: Your hero, guide him through the caves, searching for diamonds in order to activate the exit.
+        <li><img src='help/rockford.gif'>
+          <b>Rockford</b>
+          <p data-t-zh="主角。带着他穿过洞窟，收集宝石来激活出口。"
+             data-t-en="Your hero — guide him through the caves, collecting diamonds to activate the exit."></p>
           <ul id='keys'>
-            <li>Use the <b>arrow</b> keys to control Rockford.</li>
-            <li><b>PageUp</b> and <b>PageDown</b> to change level.</li>
-            <li><b>Escape</b> to restart level.</li>
+            <li data-t-zh="方向键控制 Rockford 移动。" data-t-en="Use the arrow keys to control Rockford."></li>
+            <li data-t-zh="PageUp / PageDown 切换关卡。" data-t-en="PageUp and PageDown change level."></li>
+            <li data-t-zh="Esc 重开当前关卡。" data-t-en="Escape restarts the level."></li>
           </ul>
         </li>
-        <li><img src='help/dirt.gif'>      <b>Dirt</b>: Rockford can dig through the dirt. Most of the other creatures cannot move through it.</li>
-        <li><img src='help/boulder.gif'>   <b>Boulder</b>: A big rock which can easily block your way. A boulder falls down when there's empty space beneath it, so watch out when there are boulders above you; you'll lose a life when crushed! It is also possible for Rockford to move boulders by pushing them.</li>
-        <li><img src='help/diamond.gif'>   <b>Diamond</b>: Very important! To complete a cave you have to find a certain amount of diamonds.</li>
-        <li><img src='help/wall.gif'>      <b>Wall</b>: Walls can block Rockfords path, fortunately it is possible to blast through them by exploding fireflies or butterflies.</li>
-        <li><img src='help/steel.gif'>     <b>Steel Wall</b>: Also a wall, but an indestructable one.</li>
-        <li><img src='help/magic.gif'>     <b>Magic Wall</b>: This very special wall that converts boulders into diamonds and vice versa. A magic wall can only be activated for a limited time.</li>
-        <li><img src='help/firefly.gif'>   <b>Firefly</b>: This is one of your enemies. You'll die when you touch it, but you can also destroy the firefly by dropping a boulder on it. All the elements surrounding the firefly (except a steel wall) will be destroyed as well. You can use this to blast through a brick wall. Fireflies move in a predictable clockwise pattern along the border of empty spaces.</li>
-        <li><img src='help/butterfly.gif'> <b>Butterfly</b>: The other enemy. Like the firefly, the butterfly is deadly to the touch. The most important difference is that the butterfly turns to diamonds when destroyed! Butterflies move counterclockwise along the border of empty spaces.</li>
-        <li><img src='help/amoeba.gif'>    <b>Amoeba</b>: A slimy mass, which will grow and grow. It will turn into boulders when it grows too large, but if you enclose the amoeba by boulders or walls, then it will turn into diamonds. Fireflies and butterflies are immediately destroyed when touching the amoeba.</li>
-        <li><img src='help/exit.gif'>      <b>Exit</b>: This exit will be revealed when you have collected the required number of diamonds. Now you can enter it and you are transported to the next cave, after getting some bonus points.</li>
+
+        <li><img src='help/dirt.gif'><b data-t-zh="泥土" data-t-en="Dirt"></b>
+          <p data-t-zh="Rockford 能挖开泥土，其他生物大多不行。"
+             data-t-en="Rockford can dig through dirt. Most other creatures cannot move through it."></p>
+        </li>
+
+        <li><img src='help/boulder.gif'><b data-t-zh="巨石" data-t-en="Boulder"></b>
+          <p data-t-zh="挡路的大家伙。下面空了就会往下掉 —— 头顶有石头时千万小心，被砸中就丢一条命。Rockford 可以横向推开它。"
+             data-t-en="A big rock that blocks the way. A boulder falls when there is empty space beneath it, so watch out for the ones above you — being crushed costs a life. Rockford can push boulders sideways."></p>
+        </li>
+
+        <li><img src='help/diamond.gif'><b data-t-zh="宝石" data-t-en="Diamond"></b>
+          <p data-t-zh="最重要的东西。每关都要收集到指定数量才能通关。"
+             data-t-en="Very important! To complete a cave you have to find a certain amount of diamonds."></p>
+        </li>
+
+        <li><img src='help/wall.gif'><b data-t-zh="砖墙" data-t-en="Wall"></b>
+          <p data-t-zh="挡住去路的墙，但可以被萤火虫或蝴蝶的爆炸轰开。"
+             data-t-en="Walls block Rockford's path, but they can be blasted through by exploding fireflies or butterflies."></p>
+        </li>
+
+        <li><img src='help/steel.gif'><b data-t-zh="钢墙" data-t-en="Steel Wall"></b>
+          <p data-t-zh="同样是墙，但炸不掉。"
+             data-t-en="Also a wall, but an indestructible one."></p>
+        </li>
+
+        <li><img src='help/magic.gif'><b data-t-zh="魔法墙" data-t-en="Magic Wall"></b>
+          <p data-t-zh="特殊墙体，能把石头变成宝石（反过来也行）。它只在有限时间内有效。"
+             data-t-en="A very special wall that converts boulders into diamonds and vice versa. It can only be activated for a limited time."></p>
+        </li>
+
+        <li><img src='help/firefly.gif'><b data-t-zh="萤火虫" data-t-en="Firefly"></b>
+          <p data-t-zh="敌人之一，碰到就死；但可以用石头砸死它。它爆炸时会毁掉周围一圈（钢墙除外），正好用来炸开砖墙。沿空地的边缘逆时针飞。"
+             data-t-en="One of your enemies. Touching it kills you, but you can destroy it by dropping a boulder on it. Everything around it (except steel walls) is destroyed too — handy for blasting through brick. Fireflies move clockwise around the border of empty spaces."></p>
+        </li>
+
+        <li><img src='help/butterfly.gif'><b data-t-zh="蝴蝶" data-t-en="Butterfly"></b>
+          <p data-t-zh="另一种敌人，碰到同样致命。区别在于它被砸死之后会变成一堆宝石 —— 这是宝石的主要来源。它沿空地的边缘顺时针飞（和萤火虫相反）。"
+             data-t-en="The other enemy. Like the firefly it is deadly to the touch, but when destroyed it turns into diamonds — most of your income. Butterflies move counter-clockwise around the border of empty spaces."></p>
+        </li>
+
+        <li><img src='help/amoeba.gif'><b data-t-zh="变形虫" data-t-en="Amoeba"></b>
+          <p data-t-zh="会不断生长的黏液。长得太大就变成石头；如果你用石头或墙把它围起来，它窒息后反而会变成宝石。萤火虫和蝴蝶碰到它会被立刻消灭。"
+             data-t-en="A slimy mass that keeps growing. It turns into boulders when it gets too large, but if you enclose it with boulders or walls it suffocates into diamonds. Fireflies and butterflies are destroyed instantly on contact."></p>
+        </li>
+
+        <li><img src='help/exit.gif'><b data-t-zh="出口" data-t-en="Exit"></b>
+          <p data-t-zh="宝石收集够之后出现。走进去就进入下一关，并结算剩余时间的奖励分。"
+             data-t-en="Revealed once you have the required number of diamonds. Enter it to be transported to the next cave, after a bonus for the time you had left."></p>
+        </li>
       </ul>
 
-      <a id="back" href="index.html">back to game</a>
+      <a id="back" href="index.html" data-t-zh="返回游戏" data-t-en="back to game">back to game</a>
 
     </div>
   </div>
+
+  <script>
+    MG.init({ id: "boulder-dash-guide", autoHelp: false });
+  </script>
 
 </body> 
 </html>

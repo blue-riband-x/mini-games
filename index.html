@@ -6,6 +6,8 @@
 <title>Mini Games · Ricky</title>
 <meta name="author" content="Ricky">
 <meta name="description" content="四个能直接在浏览器里玩的小游戏：太空塔防、跑打射击、推石解谜、落沙沙盒。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305080d'/%3E%3Crect x='6' y='6' width='8' height='8' fill='%235eead4'/%3E%3Crect x='18' y='6' width='8' height='8' fill='%23f2b544'/%3E%3Crect x='6' y='18' width='8' height='8' fill='%239db4c8'/%3E%3Crect x='18' y='18' width='8' height='8' fill='%23e8845f'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="shared/mg.css"><script src="shared/mg.js"></script>
 <style>
   :root {
     --bg: #05080d;
@@ -35,6 +37,9 @@
   .mono { font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace; }
 
   header { width: 100%; max-width: 1040px; }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
   .eyebrow {
     font-size: 11px; letter-spacing: .34em; text-transform: uppercase;
     color: var(--dim);
@@ -49,7 +54,7 @@
   h1 em { font-style: normal; color: var(--accent); }
   .sub {
     margin: 14px 0 0;
-    max-width: 46ch;
+    max-width: 50ch;
     font-size: 14px; line-height: 1.85; color: #8ba3b3;
   }
   .rule {
@@ -122,58 +127,92 @@
   }
   footer a { color: #7e94a4; text-decoration: none; border-bottom: 1px solid #23384a; }
   footer a:hover { color: var(--accent); border-color: var(--accent); }
+
+  @media (max-width: 560px) {
+    body { padding: 40px 16px 48px; }
+    .topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="eyebrow mono">Mini Games / Static / No Build</div>
-  <h1>四个小游戏，<em>打开就能玩</em></h1>
-  <p class="sub">
-    都是纯静态页面，没有后端、没有构建步骤，浏览器直接跑。四种完全不同的玩法：
-    塔防、跑打射击、推石解谜、落沙沙盒。
-  </p>
+  <div class="topbar">
+    <div class="eyebrow mono">Mini Games / Static / No Build</div>
+    <div id="mgLangSlot"></div>
+  </div>
+  <h1><span data-t-zh="四个小游戏，" data-t-en="Four small games, "></span><em data-t-zh="打开就能玩" data-t-en="ready to play"></em></h1>
+  <p class="sub" data-t-zh="都是纯静态页面，没有后端、没有构建步骤，浏览器直接跑。四种完全不同的玩法：塔防、跑打射击、推石解谜、落沙沙盒。"
+     data-t-en="Plain static pages — no backend, no build step, straight into the browser. Four completely different genres: tower defense, run &amp; gun, boulder puzzling, falling-sand sandbox."></p>
   <div class="rule"></div>
 </header>
 
 <main>
   <a class="card" href="tower-defense/" style="--tone:#5eead4">
     <div class="no mono">01 / STRATEGY</div>
-    <h2 class="name">EXO 深空防线<small>Exo · Tower Defense</small></h2>
-    <p class="desc">在陌生星球的轨道上建基地、架炮塔，扛住一波比一波凶的进攻。资源只有矿物和能量两种，花在哪条线上决定你能不能活过第十波。</p>
-    <div class="tags"><span>塔防</span><span>鼠标操作</span><span>无图片资源</span></div>
-    <div class="go mono">进入 <i></i></div>
+    <h2 class="name"><span data-t-zh="EXO 深空防线" data-t-en="EXO"></span><small>Exo · Tower Defense</small></h2>
+    <p class="desc" data-t-zh="在陌生星球的轨道上建基地、架炮塔，扛住一波比一波凶的进攻。资源只有矿物和能量两种，花在哪条线上决定你能不能活过第十波。"
+       data-t-en="Build stations and turrets in orbit of an unknown world, and hold out against wave after wave. Only two resources — minerals and energy; where you spend them decides whether you live past wave ten."></p>
+    <div class="tags">
+      <span data-t-zh="塔防" data-t-en="Tower defense"></span>
+      <span data-t-zh="鼠标操作" data-t-en="Mouse"></span>
+      <span data-t-zh="无图片资源" data-t-en="No sprite assets"></span>
+    </div>
+    <div class="go mono"><span data-t-zh="进入" data-t-en="Enter"></span> <i></i></div>
   </a>
 
   <a class="card" href="space-huggers/index.html" style="--tone:#f2b544">
     <div class="no mono">02 / ACTION</div>
     <h2 class="name">Space Huggers<small>Run &amp; Gun Roguelike</small></h2>
-    <p class="desc">横版跑打，地形可以炸开，墙被打穿后会露出后面的敌人。九条命、四波杂兵、一个会追着你打的关底，死一次地图重排。</p>
-    <div class="tags"><span>射击</span><span>键盘 · 手柄</span><span>可破坏地形</span></div>
-    <div class="go mono">进入 <i></i></div>
+    <p class="desc" data-t-zh="横版跑打，地形可以炸开，墙被打穿后会露出后面的敌人。九条命、四波杂兵、一个会追着你打的关底，死一次地图重排。"
+       data-t-en="Side-scrolling run &amp; gun with destructible terrain — blast a wall and whatever hid behind it comes out. Nine lives, four waves of grunts, one boss that hunts you down; die and the map reshuffles."></p>
+    <div class="tags">
+      <span data-t-zh="射击" data-t-en="Shooter"></span>
+      <span data-t-zh="键盘 · 手柄" data-t-en="Keys · Gamepad"></span>
+      <span data-t-zh="可破坏地形" data-t-en="Destructible terrain"></span>
+    </div>
+    <div class="go mono"><span data-t-zh="进入" data-t-en="Enter"></span> <i></i></div>
   </a>
 
   <a class="card" href="boulder-dash/index.html" style="--tone:#9db4c8">
     <div class="no mono">03 / PUZZLE</div>
     <h2 class="name">Boulder Dash<small>Dig · Push · Survive</small></h2>
-    <p class="desc">挖开泥土找宝石，推动石头开路，但石头会往下掉 —— 掉在你头上就没了。每关要拿够宝石才能开出口，限时。</p>
-    <div class="tags"><span>解谜</span><span>方向键</span><span>C64 经典</span></div>
-    <div class="go mono">进入 <i></i></div>
+    <p class="desc" data-t-zh="挖开泥土找宝石，推动石头开路，但石头会往下掉 —— 掉在你头上就没了。每关要拿够宝石才能开出口，限时。"
+       data-t-en="Dig through dirt for diamonds, shove boulders aside — but boulders fall, and one landing on your head is fatal. Every cave needs a minimum diamond count before the exit opens, against the clock."></p>
+    <div class="tags">
+      <span data-t-zh="解谜" data-t-en="Puzzle"></span>
+      <span data-t-zh="方向键" data-t-en="Arrow keys"></span>
+      <span data-t-zh="C64 经典" data-t-en="C64 classic"></span>
+    </div>
+    <div class="go mono"><span data-t-zh="进入" data-t-en="Enter"></span> <i></i></div>
   </a>
 
   <a class="card" href="project-sand/index.html" style="--tone:#e8845f">
     <div class="no mono">04 / SANDBOX</div>
     <h2 class="name">Project Sand<small>Falling Sand Simulator</small></h2>
-    <p class="desc">没有输赢的物理沙盒：沙子会堆、水会流、火会烧、酸会溶。二十多种元素互相反应，笔刷一画就能搭出一整套连锁。</p>
-    <div class="tags"><span>沙盒</span><span>鼠标绘制</span><span>元素反应</span></div>
-    <div class="go mono">进入 <i></i></div>
+    <p class="desc" data-t-zh="没有输赢的物理沙盒：沙子会堆、水会流、火会烧、酸会溶。二十多种元素互相反应，笔刷一画就能搭出一整套连锁。"
+       data-t-en="A sandbox with no win state: sand piles up, water flows, fire burns, acid dissolves. Twenty-plus elements react to one another — one brush stroke can set off a whole chain."></p>
+    <div class="tags">
+      <span data-t-zh="沙盒" data-t-en="Sandbox"></span>
+      <span data-t-zh="鼠标绘制" data-t-en="Mouse drawing"></span>
+      <span data-t-zh="元素反应" data-t-en="Element reactions"></span>
+    </div>
+    <div class="go mono"><span data-t-zh="进入" data-t-en="Enter"></span> <i></i></div>
   </a>
 </main>
 
 <footer>
-  <div>© 2026 Ricky · 四个项目都在仓库 <a href="https://github.com/blue-riband-x/mini-games" target="_blank" rel="noreferrer">mini-games</a> 里，来源与许可见 <a href="THIRD-PARTY.md">THIRD-PARTY.md</a></div>
-  <div class="mono">NO SERVER · NO BUILD · PURE STATIC</div>
+  <div>
+    <span data-t-zh="© 2026 Ricky · 四个项目都在仓库" data-t-en="© 2026 Ricky · All four live in the"></span>
+    <a href="https://github.com/blue-riband-x/mini-games" target="_blank" rel="noreferrer">mini-games</a>
+    <span data-t-zh="里，来源与许可见" data-t-en="repo; sources and licences in"></span>
+    <a href="THIRD-PARTY.md">THIRD-PARTY.md</a>
+  </div>
+  <div class="mono" data-t-zh="无服务端 · 无构建 · 纯静态" data-t-en="NO SERVER · NO BUILD · PURE STATIC"></div>
 </footer>
 
+<script>
+  MG.init({ id: "hub", dock: false, mount: "#mgLangSlot", autoHelp: false });
+</script>
 </body>
 </html>

@@ -9,10 +9,10 @@ var WaveManager = (function() {
 
 	// Speech flavor.
 	var speechFlavor = [
-		"enemies, approaching",
-		"we are under attack",
-		"enemy, in-bound",
-		"hostiles detected"
+		["敌军正在接近", "enemies, approaching"],
+		["我们遭到攻击", "we are under attack"],
+		["敌舰进入射程", "enemy, in-bound"],
+		["检测到敌对目标", "hostiles detected"]
 	];
 
 	/***************************************************************************
@@ -45,7 +45,7 @@ var WaveManager = (function() {
 			timer = cooldown * 60;
 
 			var i = ~~(Math.random()*speechFlavor.length);
-			speak(speechFlavor[i]);
+			speak(MG.t(speechFlavor[i][0], speechFlavor[i][1]));
 		}
 	}
 

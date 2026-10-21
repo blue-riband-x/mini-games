@@ -565,7 +565,8 @@ Boulderdash = function() {
     },
 
     onChangeLevel: function(info) {
-      this.description(info.description);
+      this.caveInfo = info;
+      this.description(MG.t(info.description[0], info.description[1]));
       this.colors(info.color1, info.color2);
       this.invalidateCave();
       this.invalidateScore();
@@ -801,6 +802,17 @@ Boulderdash = function() {
   }
 
   //---------------------------------------------------------------------------
+
+  /*
+   * Switching language only needs to re-label the caption of the cave that is
+   * currently on screen; everything else is drawn from sprite tiles.
+   */
+  if (window.MG) {
+    MG.onChange(function() {
+      var info = render.caveInfo;
+      if (info) render.description(MG.t(info.description[0], info.description[1]));
+    });
+  }
 
   run.game   = game;   // debug access using Boulderdash.game
   run.render = render; // debug access using Boulderdash.render

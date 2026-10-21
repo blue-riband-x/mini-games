@@ -21,7 +21,7 @@ var LoadingScreen = (function() {
             if (!ready) {
                 ready = true;
                 musicLoop(musSpace);
-                speak("Welcome to Exo");
+                speak(MG.t("欢迎来到 EXO", "Welcome to Exo"));
             }
 
 			// Mouse click anywhere, fallback for starting music locally.
@@ -66,22 +66,22 @@ var LoadingScreen = (function() {
 
         ctx.font = "small-caps 700 32px monospace";
         if (Music.loading) {
-            ctx.fillText("Loading music...", centerX, centerY+64);
+            ctx.fillText(MG.t("载入音乐…", "Loading music..."), centerX, centerY+64);
         } else if (Sound.loading) {
-            ctx.fillText("Loading sounds...", centerX, centerY+64);
+            ctx.fillText(MG.t("载入音效…", "Loading sounds..."), centerX, centerY+64);
         } else {
 			ctx.globalAlpha = hovering ? 1 : 0.5;
-            ctx.fillText("click here to play!", centerX, centerY+64);
+            ctx.fillText(MG.t("点这里开始", "click here to play!"), centerX, centerY+64);
 			ctx.globalAlpha = 1;
         }
 
         ctx.font = "small-caps 700 16px monospace";
-        ctx.fillText("Created by", centerX, Canvas.height-148);
+        ctx.fillText(MG.t("作者", "Created by"), centerX, Canvas.height-148);
         ctx.fillText("Ricky", centerX, Canvas.height-128);
-		ctx.fillText("original EXO by ai Doge & Jack Oatley", centerX, Canvas.height-108);
+		ctx.fillText(MG.t("原作 EXO：ai Doge & Jack Oatley", "original EXO by ai Doge & Jack Oatley"), centerX, Canvas.height-108);
         ctx.fillText("for #js13k", centerX, Canvas.height-88);
-		ctx.fillText("made with; Atom & SoundBox", centerX, Canvas.height-48);
-		ctx.fillText("works best in Chrome, quality in other browsers will vary!", centerX, Canvas.height-28);
+		ctx.fillText(MG.t("使用 Atom 与 SoundBox 制作", "made with; Atom & SoundBox"), centerX, Canvas.height-48);
+		ctx.fillText(MG.t("建议使用 Chrome，其他浏览器效果可能有差异", "works best in Chrome, quality in other browsers will vary!"), centerX, Canvas.height-28);
     }
 
 	// Export.

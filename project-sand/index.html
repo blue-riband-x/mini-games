@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-
-<html lang="en-US">
+<html lang="zh-CN">
 
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
-  <title>Project Sand</title>
-  <meta name="keywords" content="sand, falling, game" />
-  <meta name="description" content="Project Sand: A modern version of the classic Hell of Sand Falling Game" />
+  <link rel="stylesheet" href="../shared/mg.css">
+  <script src="../shared/mg.js"></script>
+  <title>Project Sand · 落沙沙盒 · Ricky</title>
+  <meta name="keywords" content="sand, falling, game, 落沙, 沙盒" />
+  <meta name="description" content="Project Sand：经典落沙游戏的现代版本" />
   <meta name="subject" content="Project Sand" />
   <meta charset="UTF-8">
   <meta name="google" content="notranslate">
@@ -14,85 +15,185 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 </head>
 
-<div class="wrapper" id="gameWrapper">
-  <div id="titleWrapper">
-    <h1 class="title">Project Sand</h1>
-    <div class="subheader">
-      <div class="column-left">
-        <a href="https://github.com/blue-riband-x/mini-games" target="_blank">Source Code</a>
+<body>
+  <div class="app" id="gameWrapper">
+
+    <header class="app-head">
+      <div class="brand">
+        <h1 class="title">Project Sand <span class="title-cn" data-t-zh="落沙沙盒" data-t-en="Falling Sand"></span></h1>
+        <p class="tagline" data-t-zh="没有输赢，只有反应。选一种元素，在画布上自由地画。"
+           data-t-en="No win state, just reactions. Pick an element and draw on the canvas."></p>
       </div>
-      <div class="column-center">
-        By: Ricky
+      <div class="app-meta">
+        <button type="button" class="meta-help" onclick="MG.openHelp()">
+          <span data-t-zh="怎么玩" data-t-en="How to play"></span>
+        </button>
+        <span class="meta-sep"></span>
+        <a href="https://github.com/blue-riband-x/mini-games" target="_blank" rel="noreferrer">
+          <span data-t-zh="源码" data-t-en="Source"></span>
+        </a>
+        <span class="meta-sep"></span>
+        <a href="http://androdome.com/Sand/" target="_blank" rel="noreferrer">
+          <span data-t-zh="原版 Applet" data-t-en="Original Applets"></span>
+        </a>
+        <span class="meta-sep"></span>
+        <span class="meta-author">Ricky</span>
+        <div id="mgLangSlot"></div>
       </div>
-      <div class="column-right">
-        <a href="http://androdome.com/Sand/" target="_blank">Original Applets</a>
+    </header>
+
+    <div class="stage">
+      <div class="screen" id="canvasFrame">
+        <canvas id="mainCanvas">Your browser doesn't support HTML5 canvas.</canvas>
+        <div id="fps-counter" class="fps"></div>
       </div>
     </div>
+
+    <section class="panel" id="menuWrapper">
+
+      <div class="block block-elements">
+        <div class="block-head">
+          <h2 data-t-zh="元素" data-t-en="Elements"></h2>
+          <span class="block-hint" data-t-zh="选中后在画布上按住拖动" data-t-en="Select, then drag on the canvas"></span>
+        </div>
+        <div id="elementTable" class="element-grid"></div>
+      </div>
+
+      <div class="block block-controls" id="optionsCol1">
+        <div class="block-head">
+          <h2 data-t-zh="笔刷与工具" data-t-en="Brush & Tools"></h2>
+        </div>
+
+        <div class="field">
+          <label for="pensize" data-t-zh="笔刷大小" data-t-en="Pen Size"></label>
+          <select id="pensize"></select>
+        </div>
+
+        <div class="field">
+          <label data-t-zh="喷口（自动流出）" data-t-en="Spigots"></label>
+          <div class="spigot-grid">
+            <div class="spigot-row">
+              <select id="spigot1Type" class="spigotType"></select>
+              <select id="spigot1Size"></select>
+            </div>
+            <div class="spigot-row">
+              <select id="spigot2Type" class="spigotType"></select>
+              <select id="spigot2Size"></select>
+            </div>
+            <div class="spigot-row">
+              <select id="spigot3Type" class="spigotType"></select>
+              <select id="spigot3Size"></select>
+            </div>
+            <div class="spigot-row">
+              <select id="spigot4Type" class="spigotType"></select>
+              <select id="spigot4Size"></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field field-inline">
+          <label for="overwriteCheckbox" data-t-zh="覆盖已有粒子" data-t-en="Overwrite"></label>
+          <input type="checkbox" id="overwriteCheckbox" class="switch">
+        </div>
+
+        <div class="field">
+          <label for="speedSlider" data-t-zh="模拟速度" data-t-en="Speed"></label>
+          <input type="range" id="speedSlider">
+        </div>
+
+        <div class="field">
+          <label for="zombieSlider">
+            <span data-t-zh="僵尸手" data-t-en="Zombies"></span>
+            <span id="zombieCount" class="count">0</span>
+          </label>
+          <input type="range" id="zombieSlider">
+        </div>
+
+        <div class="field actions">
+          <button id="saveButton" class="optionButton btn" type="button" data-t-zh="保存" data-t-en="Save">保存</button>
+          <button id="loadButton" class="optionButton btn" type="button" data-t-zh="读取" data-t-en="Load">读取</button>
+          <button id="clearButton" class="optionButton btn btn-danger" type="button" data-t-zh="清空" data-t-en="Clear">清空</button>
+        </div>
+      </div>
+
+    </section>
+
+    <p class="foot-note">
+      <span data-t-zh="提示：元素两两之间的反应不会写在界面上，泼一桶水到岩浆上就知道了。"
+            data-t-en="Tip: the reactions between elements are not documented in the UI — pour water on lava and find out."></span>
+    </p>
   </div>
 
-  <canvas id="mainCanvas">Your browser doesn't support HTML5 canvas.</canvas>
-  <div id="menuWrapper">
-    <table id="elementTable">
-    </table>
-    <div id="optionsCol1" class="optionsCol">
-      <div id="penSizeDiv">
-        <label for="pensize">Pen Size</label>
-        <select id="pensize"></select>
-      </div>
-      <div>
-        <select id="spigot1Type" class="spigotType"></select>
-        <select id="spigot1Size"></select>
-      </div>
-      <div>
-        <select id="spigot2Type" class="spigotType"></select>
-        <select id="spigot2Size"></select>
-      </div>
-      <div>
-        <select id="spigot3Type" class="spigotType"></select>
-        <select id="spigot3Size"></select>
-      </div>
-      <div>
-        <select id="spigot4Type" class="spigotType"></select>
-        <select id="spigot4Size"></select>
-      </div>
-    </div>
-    <div id="optionsCol2" class="optionsCol">
-      <div>
-        <label for="overwriteCheckbox">Overwrite</label>
-        <input type="checkbox" id="overwriteCheckbox">
-      </div>
-      <div id="speedSliderDiv">
-        <label for="speedSlider">Speed</label>
-        <input type="range" id="speedSlider">
-      </div>
-      <div id="zombieSliderDiv">
-        <label for="zombieSlider">Zombies</label>
-        <input type="range" id="zombieSlider">
-        <span id="zombieCount">0</span>
-      </div>
-      <div class="optionButtonContainer">
-        <input id="saveButton" class="optionButton" type="button" value="Save">
-        <input id="loadButton" class="optionButton" type="button" value="Load">
-      </div>
-      <div id="clearButtonDiv" class="optionButtonContainer">
-        <input id="clearButton" class="optionButton" type="button" value="Clear">
-      </div>
-    </div>
-    <div id="fps-counter">
-    </div>
-  </div>
-</div>
+  <script type="text/javascript" src="scripts/third_party/matter.min.js"></script>
+  <script type="text/javascript" src="scripts/util.js"></script>
+  <script type="text/javascript" src="scripts/canvasConfig.js"></script>
+  <script type="text/javascript" src="scripts/cursor.js"></script>
+  <script type="text/javascript" src="scripts/particles.js"></script>
+  <script type="text/javascript" src="scripts/elements.js"></script>
+  <script type="text/javascript" src="scripts/spigots.js"></script>
+  <script type="text/javascript" src="scripts/menu.js"></script>
+  <script type="text/javascript" src="scripts/softBody.js"></script>
+  <script type="text/javascript" src="scripts/zombies.js"></script>
+  <script type="text/javascript" src="scripts/game.js"></script>
 
-<script type="text/javascript" src="scripts/third_party/matter.min.js"></script>
-<script type="text/javascript" src="scripts/util.js"></script>
-<script type="text/javascript" src="scripts/canvasConfig.js"></script>
-<script type="text/javascript" src="scripts/cursor.js"></script>
-<script type="text/javascript" src="scripts/particles.js"></script>
-<script type="text/javascript" src="scripts/elements.js"></script>
-<script type="text/javascript" src="scripts/spigots.js"></script>
-<script type="text/javascript" src="scripts/menu.js"></script>
-<script type="text/javascript" src="scripts/softBody.js"></script>
-<script type="text/javascript" src="scripts/zombies.js"></script>
-<script type="text/javascript" src="scripts/game.js"></script>
+  <script>
+    MG.init({
+      id: "project-sand",
+      mount: "#mgLangSlot",
+      dock: false,
+      help: {
+        zh: {
+          title: "怎么玩 · Project Sand",
+          lead: "没有关卡也没有分数。这是一块可以随便糟蹋的沙盘：沙子会堆积，水会流，火会烧，酸会往下溶，二十多种元素各有各的脾气。",
+          keys: [
+            ["鼠标左键拖动", "用当前元素画画"],
+            ["右侧笔刷大小", "从 1px 到 32px，画大一点反应更快"],
+            ["喷口", "设置 4 个自动出料口，游戏会自动往外倒"],
+            ["保存 / 读取", "把当前画面存下来，下次接着玩"],
+            ["清空", "擦干净重来"]
+          ],
+          sectionsTitle: "元素与反应",
+          sections: [
+            { h: "基础材料", p: "墙、沙、水、土、盐、蜡、油 —— 沙会堆成坡，水会找平，盐遇水会溶，油比水轻会浮上来。" },
+            { h: "火与爆炸", p: "火会蔓延到可燃物（植物、油、汽油、甲烷）。火药、硝化甘油、C4 是三级爆炸物，热量和冲击波范围不一样 —— 别在密封空间里试。" },
+            { h: "温度", p: "岩浆和铝热剂极度高温，冰和液氮极度低温。水遇岩浆会变成蒸汽，冰遇火会化。" },
+            { h: "酸与神秘", p: "酸会把大部分东西溶掉，只有墙挡得住。标着 ??? 的那个元素是给你自己试的。" }
+          ],
+          tipsTitle: "要点",
+          tips: [
+            "先画一圈墙当容器，再往里面倒东西，比乱泼好控制得多。",
+            "右上角是模拟帧率；把速度调低可以让瞬时反应看得更清楚。",
+            "僵尸手是彩蛋，拖动僵尸数量就能放几只进来抓粒子。"
+          ]
+        },
+        en: {
+          title: "How to play · Project Sand",
+          lead: "No levels, no score. It is a sandbox you are free to wreck: sand piles up, water flows, fire spreads, acid eats downward — twenty-odd elements, each with its own behaviour.",
+          keys: [
+            ["Left mouse drag", "Paint with the selected element"],
+            ["Pen size", "From 1px to 32px — bigger reacts faster"],
+            ["Spigots", "Four auto-emitters that pour on their own"],
+            ["Save / Load", "Keep the current picture for later"],
+            ["Clear", "Wipe it clean"]
+          ],
+          sectionsTitle: "Elements & reactions",
+          sections: [
+            { h: "Materials", p: "Wall, sand, water, soil, salt, wax, oil — sand forms slopes, water levels out, salt dissolves, oil floats." },
+            { h: "Fire & explosions", p: "Fire spreads into anything flammable (plants, oil, napalm, methane). Gunpowder, nitro and C4 are three grades of explosive with different heat and blast radius — do not test them in an enclosed space." },
+            { h: "Temperature", p: "Lava and thermite run extremely hot; ice and cryo extremely cold. Water flashes to steam on lava, ice melts near fire." },
+            { h: "Acid & mystery", p: "Acid dissolves almost everything except wall. The element labelled ??? is there for you to work out." }
+          ],
+          tipsTitle: "Tips",
+          tips: [
+            "Draw a container out of wall first, then pour into it — far more controllable than splashing around.",
+            "The FPS readout is top-right; lower the speed to watch a fast reaction frame by frame.",
+            "The zombie hand is an easter egg — drag the zombie slider to drop a few in and watch them grab particles."
+          ]
+        }
+      }
+    });
+  </script>
+
+</body>
 
 </html>

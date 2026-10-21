@@ -1,24 +1,224 @@
-body          { font-family: Arial, Helvetica, sans-serif; background-color: #EEE; }
-#boulderdash  { position: relative; margin: 0 auto; }
-#description  { color: #333; font-style: italic; padding-left: 0.5em; }
-#help         { float: right; color: blue; font-size: 12pt; }
-#back         { color: blue; font-size: 10pt; padding-left: 1em; }
-#keys         { color: #333; font-style: italic; font-size: 0.8em; margin-top: 1em; }
-#stats        { position: absolute; top: 0; right: -100px; }
-#canvas       { display: block; margin: 0 auto; box-shadow: 10px 10px 10px #999; border: 2px solid black; }
+/* ------------------------------------------------------------------------
+   Boulder Dash — page chrome.
+   The cave itself is drawn on #canvas at whatever CSS size it happens to be,
+   so the layout is fully fluid (no fixed pixel breakpoints any more).
+   ------------------------------------------------------------------------ */
 
-#header img          { cursor: pointer; width: 1.25em; float: left; }
-#header img.disabled { cursor: default; opacity: 0.5; }
-#header img:active   { opacity: 0.7; }
+:root {
+  --bd-bg: #05080d;
+  --bd-panel: #0c151e;
+  --bd-line: #1d2f3d;
+  --bd-line-2: #2a4356;
+  --bd-text: #d8e6ef;
+  --bd-dim: #7f95a6;
+  --bd-accent: #9db4c8;
+  --bd-mint: #5eead4;
+  --bd-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+}
 
-#instructions           { padding: 1em; font-size: 12pt; width: 40em; }
-#instructions ul li     { padding: 1em 0.5em; list-style-type: none; vertical-align: middle; border-top: 1px solid #CCC; min-height: 2em; }
-#instructions ul li img { width: 32px; height: 32px; float: left; margin-right: 8px; border: 2px solid black; }
-#instructions #keys li  { min-height: 0; border: 0; padding: 0; margin-left: 2em; list-style-type: disc; }
+* { box-sizing: border-box; }
 
-@media screen and (min-width:    0px) and (min-height:   0px) { #boulderdash { font-size: 0.75em; width:  640px; } #canvas { width:  640px; height: 368px; } } /* 16px chunks */
-@media screen and (min-width:  840px) and (min-height: 520px) { #boulderdash { font-size: 1.00em; width:  800px; } #canvas { width:  800px; height: 460px; } } /* 20px chunks */
-@media screen and (min-width: 1000px) and (min-height: 602px) { #boulderdash { font-size: 1.25em; width:  960px; } #canvas { width:  960px; height: 552px; } } /* 24px chunks */
-@media screen and (min-width: 1160px) and (min-height: 694px) { #boulderdash { font-size: 1.50em; width: 1120px; } #canvas { width: 1120px; height: 644px; } } /* 28px chunks */
-@media screen and (min-width: 1320px) and (min-height: 786px) { #boulderdash { font-size: 1.75em; width: 1280px; } #canvas { width: 1280px; height: 736px; } } /* 32px chunks */
+html, body { margin: 0; padding: 0; }
 
+body {
+  min-height: 100vh;
+  padding: 26px 14px 44px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background:
+    radial-gradient(820px 380px at 15% -12%, rgba(157, 180, 200, .10), transparent 70%),
+    radial-gradient(680px 340px at 92% 2%, rgba(94, 234, 212, .05), transparent 70%),
+    var(--bd-bg);
+  color: var(--bd-text);
+  font-family: "Sora", -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#boulderdash {
+  position: relative;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------------- header -- */
+
+#header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 2px 11px;
+}
+
+#header img {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  border-radius: 5px;
+  opacity: .85;
+  transition: opacity .14s, transform .14s;
+}
+
+#header img:hover { opacity: 1; transform: translateY(-1px); }
+#header img:active { transform: translateY(0); }
+#header img.disabled { cursor: default; opacity: .22; transform: none; }
+
+#description {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #a9bccb;
+  padding-left: 2px;
+}
+
+#help {
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  letter-spacing: .04em;
+  color: var(--bd-accent);
+  text-decoration: none;
+  padding: 6px 11px;
+  border: 1px solid var(--bd-line-2);
+  border-radius: 999px;
+  transition: color .14s, border-color .14s, background .14s;
+}
+
+#help:hover {
+  color: var(--bd-mint);
+  border-color: var(--bd-mint);
+  background: rgba(94, 234, 212, .07);
+}
+
+/* ---------------------------------------------------------------- canvas -- */
+
+#canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 40 / 23; /* 40x22 cells + one score row, keeps square pixels */
+  border-radius: 8px;
+  background: #000;
+  image-rendering: pixelated;
+  box-shadow:
+    0 0 0 1px var(--bd-line-2),
+    0 20px 46px rgba(0, 0, 0, .55);
+}
+
+/* ------------------------------------------------------------------ keys -- */
+
+#keys {
+  margin-top: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #72889a;
+}
+
+#keys b { color: #adc2d1; font-weight: 600; }
+
+/* ----------------------------------------------------------------- stats -- */
+
+#stats {
+  position: absolute;
+  top: 36px;
+  left: -94px;
+  transform: scale(.78);
+  transform-origin: top left;
+  opacity: .6;
+}
+
+/* The frame-rate widget only fits on very wide screens; elsewhere it is noise. */
+@media (max-width: 1420px) {
+  #stats { display: none; }
+}
+
+@media (max-width: 520px) {
+  body { padding: 16px 10px 34px; }
+  #description { font-size: 12px; }
+  #header img { width: 20px; height: 20px; }
+}
+
+/* ------------------------------------------------------- instructions page */
+
+#instructions {
+  padding: 4px 0 0;
+  font-size: 13px;
+}
+
+#instructions > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+#instructions ul li {
+  position: relative;
+  padding: 12px 14px;
+  border: 1px solid var(--bd-line);
+  border-radius: 9px;
+  background: var(--bd-panel);
+  overflow: hidden;
+}
+
+#instructions ul li img {
+  width: 30px;
+  height: 30px;
+  float: left;
+  margin: 0 11px 4px 0;
+  border-radius: 5px;
+  border: 1px solid var(--bd-line-2);
+  image-rendering: pixelated;
+}
+
+#instructions ul li b {
+  display: block;
+  font-size: 13px;
+  color: #e3eef5;
+  margin-bottom: 3px;
+}
+
+#instructions ul li p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #93a9b8;
+}
+
+#instructions #keys {
+  margin: 8px 0 0 41px;
+  padding: 0;
+  display: block;
+  list-style: none;
+  font-size: 12px;
+  color: #72889a;
+}
+
+#instructions #keys li {
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 0;
+  line-height: 1.8;
+}
+
+#instructions #keys li::before {
+  content: "▪";
+  color: #4d6577;
+  margin-right: 7px;
+}
+
+#back {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--bd-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+#back:hover { color: var(--bd-mint); border-color: var(--bd-mint); }

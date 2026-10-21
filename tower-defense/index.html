@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 	<head>
 		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<title>EXO 深空防线 · Ricky</title>
+		<link rel="stylesheet" href="../shared/mg.css">
+		<script src="../shared/mg.js"></script>
 		<style>
 			body {
 				margin: 0px;
 				overflow: hidden;
 				user-select: none;
+				background: #000;
 			}
+			#c { display: block; }
 		</style>
 	</head>
 	<body>
@@ -71,5 +77,60 @@
 		<script src="loadingscreen.js"></script>
 		<script src="game.js"></script>
 
+		<script>
+			MG.init({
+				id: "tower-defense",
+				help: {
+					zh: {
+						title: "怎么玩 · EXO 深空防线",
+						lead: "你是这支远征队的指挥官。基地只有一座，敌军会一波接一波打过来，手里只有矿物和能量两种资源 —— 怎么分配，决定你能撑到第几波。",
+						keys: [
+							["鼠标拖拽 / WASD / 方向键", "平移视角，看看整个星系"],
+							["滚轮", "缩放，拉近看清轨道"],
+							["空格", "暂停 / 继续（敌方进攻时也能停）"],
+							["底部图标", "选择要建造的东西"],
+							["左键点星球", "把建筑放到它的轨道上"]
+						],
+						sectionsTitle: "规则",
+						sections: [
+							{ h: "屏幕顶部从左到右", p: "基地结构值（归零即失败）、已撑过的波数、下一波倒计时、矿物、能量。" },
+							{ h: "三种建筑", p: "卫星：从恒星抽能量，同时把信号中继出去。采矿站：从行星抽矿物。防御平台：激光 / 光束 / 火箭 / 电磁 / 闪电五种炮台，价格与手感都不同。" },
+							{ h: "必须连回基地", p: "任何建筑都要有链路通往基地才工作。断链时它会变暗、不开火，但也因此不会被敌人发现 —— 有时反而是好事。" },
+							{ h: "节奏", p: "每清一波，下一波来得更快、数量更多。前期别把钱全砸在炮台上。" }
+						],
+						tipsTitle: "要点",
+						tips: [
+							"能量见底炮塔就会停摆，第一优先是卫星，不是武器。",
+							"点自己的建筑会弹出升级面板，可以就地加强而不是到处新建。",
+							"实在撑不住就按空格暂停，慢慢看布局再决定花哪笔钱。"
+						]
+					},
+					en: {
+						title: "How to play · EXO",
+						lead: "You command a long-forgotten expedition. One base, endless waves, and only two resources — minerals and energy. How you split them decides how many waves you survive.",
+						keys: [
+							["Drag / WASD / arrows", "Pan the view around the system"],
+							["Mouse wheel", "Zoom in and out"],
+							["Space", "Pause / resume"],
+							["Bottom icons", "Pick what to build"],
+							["Left-click a body", "Place the build in its orbit"]
+						],
+						sectionsTitle: "Rules",
+						sections: [
+							{ h: "Top of the screen, left to right", p: "Structural integrity of your base (zero = game over), waves survived, countdown to the next wave, minerals, energy." },
+							{ h: "Three build types", p: "Satellites harvest energy from the star and relay your signal. Mining stations extract minerals from planets. Defense platforms come in laser / beam / rocket / EMP / lightning flavours." },
+							{ h: "Everything needs a link home", p: "A structure only works while chained back to the base. Offline structures go dark and stop firing — but enemies can no longer detect them either." },
+							{ h: "Pacing", p: "Each wave arrives faster and larger. Do not sink every mineral into turrets early." }
+						],
+						tipsTitle: "Tips",
+						tips: [
+							"Turrets stall the moment energy runs out. Satellites come before weapons.",
+							"Click your own structures to open an upgrade panel instead of building new ones.",
+							"Press space to pause whenever the layout gets away from you."
+						]
+					}
+				}
+			});
+		</script>
 	</body>
 </html>

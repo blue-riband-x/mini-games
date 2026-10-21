@@ -198,7 +198,7 @@ engineInit(
     }
 
     mainContext.font = '.5in impact';
-    p > 0 && mainContext.fillText('A JS13K Game by Ricky',mainCanvas.width/2, 210);
+    p > 0 && mainContext.fillText(MG.t('Ricky 的 JS13K 作品', 'A JS13K Game by Ricky'),mainCanvas.width/2, 210);
 
     // check if any enemies left
     let enemiesCount = 0;
@@ -216,7 +216,8 @@ engineInit(
         levelEndTimer.set();
 
     mainContext.fillStyle = new Color(0,0,0).rgba();
-    mainContext.fillText('Level ' + level + '      Lives ' + playerLives + '      Enemies ' + enemiesCount, mainCanvas.width/2, mainCanvas.height-40);
+    mainContext.fillText(MG.t('第 ' + level + ' 关    生命 ' + playerLives + '    剩余敌人 ' + enemiesCount,
+        'Level ' + level + '      Lives ' + playerLives + '      Enemies ' + enemiesCount), mainCanvas.width/2, mainCanvas.height-40);
 
     // fade in level transition
     const fade = levelEndTimer.isSet() ? percent(levelEndTimer.get(), 3, 1) : percent(levelTimer.get(), .5, 2);

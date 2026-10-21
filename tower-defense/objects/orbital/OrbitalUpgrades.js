@@ -67,12 +67,13 @@ var OrbitalUpgrades = (function() {
         var m = t.module;
         var u = upgrades[type];
         var level = (m.type === type) ? m.level+1 : 1;
+        var zhNames = { 0: "激光", 1: "光束", 2: "火箭", 3: "电磁", 4: "闪电" };
+        var zh = zhNames[type] || u.name;
         return {
             img: u.img,
-            text: u.name + " (Level " + level + ")",
+            text: MG.t(zh + " Lv." + level, u.name + " (Level " + level + ")"),
             func: Orbital.setModuleUpgrade.bind(null, t, type, level),
-            speech: "Upgrading level " + m.level + " " + m.type
-                    + ", to level " + level + " " + type
+            speech: MG.t("升级 " + zh + " 到 " + level + " 级", "Upgrading " + u.name + " to level " + level)
         }
     }
 

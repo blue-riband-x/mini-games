@@ -63,9 +63,11 @@ const refreshTimes = [];
 /* ========================================================================= */
 
 function init() {
-  var gameWrapper = document.getElementById("gameWrapper");
-  gameWrapper.style.height = height + "px";
-  gameWrapper.style.width = width + "px";
+  /* The canvas frame is sized to the simulation canvas; the surrounding app
+     layout stays fluid so the menu can be laid out independently. */
+  var canvasFrame = document.getElementById("canvasFrame");
+  canvasFrame.style.height = height + "px";
+  canvasFrame.style.width = width + "px";
 
   /* setting FPS must occur before initMenu() */
   setFPS(DEFAULT_FPS);

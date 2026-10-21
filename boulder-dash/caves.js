@@ -58,35 +58,44 @@ CAVES = function() { // ported from c version available at http://www.bd-fans.co
     [ 0x14, 0x03, 0x1E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x06, 0x06, 0x06, 0x06, 0x14, 0x14, 0x14, 0x14, 0x14, 0x06, 0x08, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x87, 0x00, 0x02, 0x28, 0x16, 0x07, 0x87, 0x00, 0x02, 0x14, 0x0C, 0x01, 0xD0, 0x0B, 0x03, 0x03, 0x02, 0x80, 0x0B, 0x07, 0x03, 0x06, 0x00, 0x43, 0x0B, 0x06, 0x03, 0x02, 0x43, 0x0B, 0x0A, 0x03, 0x02, 0x50, 0x08, 0x07, 0x03, 0x03, 0x25, 0x03, 0x03, 0x04, 0x09, 0x0A, 0xFF ] 
   ]
 
+  /*
+   * Level names and captions are stored as [zh, en] pairs and resolved at
+   * render time, so the 中文 / EN switch can re-label the current cave.
+   */
   var NAMES = [
-    "Intro",      "Rooms",        "Maze",       "Butterflies",
-    "Guards",     "Firefly dens", "Amoeba",     "Enchanted wall",
-    "Greed",      "Tracks",       "Crowd",      "Walls",
-    "Apocalypse", "Zigzag",       "Funnel",     "Enchanted boxes",
-    "Interval 1", "Interval 2",   "Interval 3", "Interval 4",
+    ["入门",     "Intro"],          ["房间",     "Rooms"],
+    ["迷宫",     "Maze"],           ["蝴蝶",     "Butterflies"],
+    ["守卫",     "Guards"],         ["萤火虫巢", "Firefly dens"],
+    ["变形虫",   "Amoeba"],         ["魔墙",     "Enchanted wall"],
+    ["贪婪",     "Greed"],          ["轨迹",     "Tracks"],
+    ["拥挤",     "Crowd"],          ["高墙",     "Walls"],
+    ["天启",     "Apocalypse"],     ["之字",     "Zigzag"],
+    ["漏斗",     "Funnel"],         ["魔箱",     "Enchanted boxes"],
+    ["过场 1",   "Interval 1"],     ["过场 2",   "Interval 2"],
+    ["过场 3",   "Interval 3"],     ["过场 4",   "Interval 4"],
   ]
 
   var DESCRIPTIONS = [
-    "Pick up jewels and exit before time is up",
-    "Pick up jewels, but you must move boulders to get all jewels",
-    "Pick up jewels. You must get every jewel to exit",
-    "Drop boulders on butterflies to create jewels",
-    "The jewels are there for grabbing, but they are guarded by the deadly fireflies",
-    "Each firefly is guarding a jewel",
-    "Surround the amoeba with boulders. Pick up jewels when it suffocates",
-    "Activate the enchanted wall and create as many jewels as you can",
-    "You have to get a lot of jewels here, lucky there are so many",
-    "Get the jewels, avoid the fireflies",
-    "You must move a lot of boulders around in some tight spaces",
-    "Drop a boulder on a firefly at the right time to blast through walls",
-    "Bring the butterflies and amoeba together and watch the jewels fly",
-    "Magically transform the butterflies into jewels, but don't waste any boulders",
-    "There is an enchanted wall at the bottom of the rock tunnel",
-    "The top of each room is an enchanted wall, but you'll have to blast your way inside",
-    "Interval 1",
-    "Interval 2",
-    "Interval 3",
-    "Interval 4"
+    ["在时间耗尽前捡够宝石并走到出口", "Pick up jewels and exit before time is up"],
+    ["捡够宝石，但你必须先推开挡路的巨石", "Pick up jewels, but you must move boulders to get all jewels"],
+    ["捡宝石 —— 这次每一颗都得拿到才能出去", "Pick up jewels. You must get every jewel to exit"],
+    ["把巨石砸到蝴蝶身上，砸出来的就是宝石", "Drop boulders on butterflies to create jewels"],
+    ["宝石就在那里，但它们被致命的萤火虫守着", "The jewels are there for grabbing, but they are guarded by the deadly fireflies"],
+    ["每只萤火虫背后都藏着一颗宝石", "Each firefly is guarding a jewel"],
+    ["用巨石把变形虫围死，它窒息后会变成宝石", "Surround the amoeba with boulders. Pick up jewels when it suffocates"],
+    ["激活魔墙，然后尽量多地把石头变成宝石", "Activate the enchanted wall and create as many jewels as you can"],
+    ["这一关要的宝石特别多，好在这里也特别多", "You have to get a lot of jewels here, lucky there are so many"],
+    ["拿到宝石，别碰到萤火虫", "Get the jewels, avoid the fireflies"],
+    ["你需要在很窄的空间里反复搬石头", "You must move a lot of boulders around in some tight spaces"],
+    ["掐准时机把石头砸在萤火虫头上，炸开一堵墙", "Drop a boulder on a firefly at the right time to blast through walls"],
+    ["把蝴蝶和变形虫凑到一起，看宝石四溅", "Bring the butterflies and amoeba together and watch the jewels fly"],
+    ["把蝴蝶变成宝石，但别浪费任何一块石头", "Magically transform the butterflies into jewels, but don't waste any boulders"],
+    ["岩石隧道的底部有一堵魔墙", "There is an enchanted wall at the bottom of the rock tunnel"],
+    ["每个房间的顶部都是魔墙，你得炸开一条路进去", "The top of each room is an enchanted wall, but you'll have to blast your way inside"],
+    ["过场 1", "Interval 1"],
+    ["过场 2", "Interval 2"],
+    ["过场 3", "Interval 3"],
+    ["过场 4", "Interval 4"],
   ]
 
   function assert(condition, msg) {

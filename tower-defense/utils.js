@@ -75,7 +75,7 @@ function clickNearest(b) {
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 			hoverName = nearest.name;
 			if (!Mouse.target && !Mouse.drag) {
-				speak(nearest.name);
+				speak(Gui.nm(nearest.name));
 				if (b && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
 					ret = nearest;
 				} else if (!Build.pending) {
@@ -92,22 +92,23 @@ function clickNearest(b) {
  *
  */
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
-	var words = text.split(' ');
+	// Latin text breaks on spaces, CJK text has to break between characters,
+	// otherwise a whole Chinese sentence ends up on one line.
+	var tokens = text.match(/[\u3000-\u303f\u3400-\u9fff\uff00-\uffef]|\s+|[^\s\u3000-\u303f\u3400-\u9fff\uff00-\uffef]+/g) || [];
 	var line = '';
 
-	for (var n = 0; n < words.length; n++) {
-		var testLine = line + words[n] + ' ';
-		var metrics = context.measureText(testLine);
-		var testWidth = metrics.width;
-		if (testWidth > maxWidth && n > 0) {
-			context.fillText(line, x, y);
-			line = words[n] + ' ';
+	for (var n = 0; n < tokens.length; n++) {
+		var token = tokens[n];
+		var testLine = line + token;
+		if (context.measureText(testLine).width > maxWidth && line !== '') {
+			context.fillText(line.replace(/\s+$/, ''), x, y);
+			line = token.replace(/^\s+/, '');
 			y += lineHeight;
 		} else {
 			line = testLine;
 		}
 	}
-	context.fillText(line, x, y);
+	context.fillText(line.replace(/\s+$/, ''), x, y);
 }
 
 /**

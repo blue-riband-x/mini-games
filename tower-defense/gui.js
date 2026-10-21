@@ -7,6 +7,26 @@ var Gui = (function() {
 	var selection;
 	var subtitles = [];
 
+	// Display names for the celestial bodies and structures. The simulation
+	// keeps English names internally; only what the player reads is switched.
+	var NAMES_ZH = {
+		"The Sun": "恒星",
+		"Moon": "卫星",
+		"Planet": "行星",
+		"Mining Station": "采矿站",
+		"Satellite": "中继卫星",
+		"Defense Platform": "防御平台"
+	};
+
+	/***************************************************************************
+	 * Translate a world name for display.
+	 * @param {string} name
+	 * @return {string}
+	 */
+	function nm(name) {
+		return MG.lang === "en" ? name : (NAMES_ZH[name] || name);
+	}
+
 	/***************************************************************************
 	 * @return {void}
 	 */
@@ -14,15 +34,27 @@ var Gui = (function() {
 		var center = Canvas.width/2;
 		var bottom = Canvas.height;
 		selection = createSelectionDisplay();
+
+		/**
+		 * Build a localised tooltip for a build button.
+		 * @param {string} zh Chinese name.
+		 * @param {string} en English name.
+		 * @param {number} cost Mineral cost.
+		 * @return {string}
+		 */
+		function cost(zh, en, cost) {
+			return MG.t(zh + "（" + cost + " 矿物）", en + " (" + cost + " minerals)");
+		}
+
 		elements = [
 			selection,
-			Button(pos, center-24-180, bottom-64, 48, 48, "Satellite (" + Orbital.getCost(ORBITAL_TYPE.SATELLITE, undefined) + " minerals)", sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, undefined)),
-			Button(pos, center-24-120, bottom-64, 48, 48, "Mining Station (" + Orbital.getCost(ORBITAL_TYPE.MINING, undefined) + " minerals)", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, undefined)),
-			Button(pos, center-24-60, bottom-64, 48, 48, "Laser Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER) + " minerals)", sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER)),
-			Button(pos, center-24, bottom-64, 48, 48, "Beam Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM) + " minerals)", sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM)),
-			Button(pos, center+24+12, bottom-64, 48, 48, "Rocket Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET) + " minerals)", sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET)),
-			Button(pos, center+24+72, bottom-64, 48, 48, "EMP Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP) + " minerals)", sprEmpPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP)),
-			Button(pos, center+24+132, bottom-64, 48, 48, "Lighting Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING) + " minerals)", sprLightningPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING))
+			Button(pos, center-24-180, bottom-64, 48, 48, cost("中继卫星", "Satellite", Orbital.getCost(ORBITAL_TYPE.SATELLITE, undefined)), sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, undefined)),
+			Button(pos, center-24-120, bottom-64, 48, 48, cost("采矿站", "Mining Station", Orbital.getCost(ORBITAL_TYPE.MINING, undefined)), sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, undefined)),
+			Button(pos, center-24-60, bottom-64, 48, 48, cost("激光平台", "Laser Platform", Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER)), sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER)),
+			Button(pos, center-24, bottom-64, 48, 48, cost("光束平台", "Beam Platform", Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM)), sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM)),
+			Button(pos, center+24+12, bottom-64, 48, 48, cost("火箭平台", "Rocket Platform", Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET)), sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET)),
+			Button(pos, center+24+72, bottom-64, 48, 48, cost("电磁平台", "EMP Platform", Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP)), sprEmpPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP)),
+			Button(pos, center+24+132, bottom-64, 48, 48, cost("闪电平台", "Lighting Platform", Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING)), sprLightningPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING))
 		];
 	}
 
@@ -69,22 +101,22 @@ var Gui = (function() {
 		ctx.fillText(~~(WaveManager.timer/60), Canvas.width/2, 96);
 
 		ctx.font = "small-caps 700 24px monospace";
-		ctx.fillText("next wave in", cx, 48);
+		ctx.fillText(MG.t("下一波倒计时", "next wave in"), cx, 48);
 
 		// Minerals.
-		ctx.fillText("minerals", cx+300*scale, 48);
+		ctx.fillText(MG.t("矿物", "minerals"), cx+300*scale, 48);
 		ctx.fillText(~~Base.minerals, cx+300*scale, 80);
 
 		// Energy.
-		ctx.fillText("energy", cx+600*scale, 48);
+		ctx.fillText(MG.t("能量", "energy"), cx+600*scale, 48);
 		ctx.fillText(~~Base.energy, cx+600*scale, 80);
 
 		// Days.
-		ctx.fillText("survived", cx-300*scale, 48);
-		ctx.fillText(WaveManager.currentWave + " waves", cx-300*scale, 80);
+		ctx.fillText(MG.t("已撑过", "survived"), cx-300*scale, 48);
+		ctx.fillText(MG.t(WaveManager.currentWave + " 波", WaveManager.currentWave + " waves"), cx-300*scale, 80);
 
 		// Base health.
-		ctx.fillText("base status", cx-600*scale, 48);
+		ctx.fillText(MG.t("基地结构", "base status"), cx-600*scale, 48);
 		ctx.fillText(~~Base.planet.hp + "%", cx-600*scale, 80);
 
 		// Tooltip.
@@ -159,7 +191,7 @@ var Gui = (function() {
 			return Base.minerals >= cost;
 		} else {
 			var name = Orbital.getName(type, modType);
-			speak("Select an area to build the " + name);
+			speak(MG.t("选择建造位置：" + nm(name), "Select an area to build the " + name));
 			Build.createBlueprint(type, modType, cost);
 			return false;
 		}
@@ -207,7 +239,8 @@ var Gui = (function() {
 				ctx.textAlign = "left";
 				ctx.textBaseline = "top";
 				ctx.font = "16px monospace";
-				var text = (Base.planet === object.target ? 'Base' : '') + '' + object.target.name;
+				var isBase = Base.planet === object.target;
+				var text = isBase ? MG.t("基地", "Base") + " · " + nm(object.target.name) : nm(object.target.name);
 				ctx.fillText(text, x+h, y+16);
 
 				// Image.
@@ -258,7 +291,15 @@ var Gui = (function() {
 		render: render,
 		addSubtitles: addSubtitles,
 		setSelectionTarget: setSelectionTarget,
-		setTooltip: setTooltip
+		setTooltip: setTooltip,
+		nm: nm
 	}
 
 })();
+
+// Rebuild the bottom build bar so tooltips follow the language switch.
+MG.onChange(function() {
+	if (typeof Gui !== "undefined" && Gui.setup) {
+		try { Gui.setup(); } catch (e) {}
+	}
+});

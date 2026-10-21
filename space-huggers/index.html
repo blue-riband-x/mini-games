@@ -1,11 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
 <title>Space Huggers · Ricky</title>
 <link rel=icon type=image/x-icon href='favicon.ico'/>
+<link rel="stylesheet" href="../shared/mg.css">
+<script src="../shared/mg.js"></script>
 <meta name="title" content="Space Huggers"></meta>
 <meta name="author" content="Ricky"></meta>
 <meta name="description" content="A run and gun roguelike platformer with destructible environments"></meta>
 <meta name=viewport content='width=device-width,initial-scale=1,user-scalable=0'>
 <meta charset=utf-8>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
 </head>
 <body>
 <script src=engine/engineUtil.js></script>
@@ -23,3 +28,64 @@
 <script src=appEffects.js></script>
 <script src=appLevel.js></script>
 <script src=app.js></script>
+<script>
+MG.init({
+	id: "space-huggers",
+	help: {
+		zh: {
+			title: "怎么玩 · Space Huggers",
+			lead: "横版跑打。每一关的地形都是随机生成的，泥土可以打穿，墙后面通常就藏着等着你的敌人。九条命，撑过四波，最后会来一个专盯你的关底。",
+			keys: [
+				["← → 或 A D", "左右移动"],
+				["↑ 或 W", "跳跃（按住跳得更高）"],
+				["Z / 鼠标左键", "射击"],
+				["C / 鼠标右键", "投掷（手雷）"],
+				["X / 鼠标中键", "闪避冲刺"],
+				["空格 或 Z", "死亡后重新开始"],
+				["R", "重开当前局"]
+			],
+			sectionsTitle: "规则",
+			sections: [
+				{ h: "目标", p: "清掉地图上所有敌人就能过关。屏幕底部中间的小方块对应还活着的敌人，越少越轻松。" },
+				{ h: "地形会碎", p: "子弹能啃掉泥土和砖块，炸开的地形后面可能是通道，也可能是更凶的敌人 —— 也可以自己挖一条路绕过正面。" },
+				{ h: "关底", p: "第四波之后会出现一个追着你打的 Boss，它不会站着挨打，要走位。" },
+				{ h: "命只有九条", p: "死掉会掉命并重排地图，命掉光就得从头开始。" }
+			],
+			tipsTitle: "要点",
+			tips: [
+				"开枪有后坐力，边跳边打更容易躲子弹。",
+				"打不过的正面战场就往下挖，地图底部常常有绕后的路。",
+				"手柄也能玩：左摇杆移动，A 跳，X 射击，B 投掷。"
+			]
+		},
+		en: {
+			title: "How to play · Space Huggers",
+			lead: "A side-scrolling run & gun. Every level is procedurally generated and the terrain is destructible — whatever hid behind that wall comes out the moment you shoot through it. Nine lives, four waves, then a boss that actively hunts you.",
+			keys: [
+				["← → / A D", "Move"],
+				["↑ / W", "Jump (hold for height)"],
+				["Z / Left mouse", "Shoot"],
+				["C / Right mouse", "Throw grenade"],
+				["X / Middle mouse", "Dodge dash"],
+				["Space or Z", "Restart after dying"],
+				["R", "Restart the run"]
+			],
+			sectionsTitle: "Rules",
+			sections: [
+				{ h: "Goal", p: "Clear every enemy on the map to advance. The small blocks along the bottom count the enemies still alive." },
+				{ h: "Terrain breaks", p: "Bullets chew through dirt and brick. What is behind it may be a shortcut or something much worse — digging your own route is a valid tactic." },
+				{ h: "Boss", p: "After the fourth wave a boss spawns and hunts you down. It does not stand still and take hits." },
+				{ h: "Nine lives", p: "Dying costs a life and reshuffles the map. Run out and you start over." }
+			],
+			tipsTitle: "Tips",
+			tips: [
+				"Shooting has recoil — jump and fire to stay mobile.",
+				"Dig down when a fight looks unwinnable; there is often a flanking route underneath.",
+				"Gamepad works too: stick to move, A jump, X shoot, B throw."
+			]
+		}
+	}
+});
+</script>
+</body>
+</html>

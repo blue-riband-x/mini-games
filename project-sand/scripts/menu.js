@@ -35,34 +35,44 @@ const elementMenuItems = [
   THERMITE, BACKGROUND, ZOMBIE,
 ];
 
+/*
+ * Display names are stored as [zh, en] pairs; the visible label is resolved
+ * through MG.t() so the page can switch language without rebuilding the game.
+ */
 const menuNames = {};
-menuNames[WALL] = "WALL";
-menuNames[SAND] = "SAND";
-menuNames[WATER] = "WATER";
-menuNames[PLANT] = "PLANT";
-menuNames[FIRE] = "FIRE";
-menuNames[SALT] = "SALT";
-menuNames[OIL] = "OIL";
-menuNames[SPOUT] = "SPOUT";
-menuNames[WELL] = "WELL";
-menuNames[TORCH] = "TORCH";
-menuNames[GUNPOWDER] = "GUNPOWDER";
-menuNames[WAX] = "WAX";
-menuNames[NITRO] = "NITRO";
-menuNames[NAPALM] = "NAPALM";
-menuNames[C4] = "C-4";
-menuNames[CONCRETE] = "CONCRETE";
-menuNames[BACKGROUND] = "ERASER";
-menuNames[FUSE] = "FUSE";
-menuNames[ICE] = "ICE";
-menuNames[LAVA] = "LAVA";
-menuNames[METHANE] = "METHANE";
-menuNames[CRYO] = "CRYO";
-menuNames[MYSTERY] = "???";
-menuNames[SOIL] = "SOIL";
-menuNames[ACID] = "ACID";
-menuNames[THERMITE] = "THERMITE";
-menuNames[ZOMBIE] = "HAND";
+menuNames[WALL] = ["墙", "WALL"];
+menuNames[SAND] = ["沙", "SAND"];
+menuNames[WATER] = ["水", "WATER"];
+menuNames[PLANT] = ["植物", "PLANT"];
+menuNames[FIRE] = ["火", "FIRE"];
+menuNames[SALT] = ["盐", "SALT"];
+menuNames[OIL] = ["油", "OIL"];
+menuNames[SPOUT] = ["喷口", "SPOUT"];
+menuNames[WELL] = ["井", "WELL"];
+menuNames[TORCH] = ["火把", "TORCH"];
+menuNames[GUNPOWDER] = ["火药", "GUNPOWDER"];
+menuNames[WAX] = ["蜡", "WAX"];
+menuNames[NITRO] = ["硝化甘油", "NITRO"];
+menuNames[NAPALM] = ["汽油弹", "NAPALM"];
+menuNames[C4] = ["C-4", "C-4"];
+menuNames[CONCRETE] = ["混凝土", "CONCRETE"];
+menuNames[BACKGROUND] = ["橡皮", "ERASER"];
+menuNames[FUSE] = ["引信", "FUSE"];
+menuNames[ICE] = ["冰", "ICE"];
+menuNames[LAVA] = ["岩浆", "LAVA"];
+menuNames[METHANE] = ["甲烷", "METHANE"];
+menuNames[CRYO] = ["液氮", "CRYO"];
+menuNames[MYSTERY] = ["???", "???"];
+menuNames[SOIL] = ["土", "SOIL"];
+menuNames[ACID] = ["酸", "ACID"];
+menuNames[THERMITE] = ["铝热剂", "THERMITE"];
+menuNames[ZOMBIE] = ["僵尸手", "HAND"];
+
+/* Localised label for an element type. */
+function menuName(type) {
+  const pair = menuNames[type];
+  return pair ? MG.t(pair[0], pair[1]) : "";
+}
 
 /*
  * Some element colors do not have very good contrast against
@@ -80,58 +90,47 @@ function initMenu() {
   /* The wrapper div that holds the entire menu */
   const menu = document.getElementById("menuWrapper");
 
-  /* Set up the wrapper div that holds the element selectors */
+  /* Set up the container that holds the element selectors */
   const elementMenu = document.getElementById("elementTable");
-  elementMenu.style.width =
-    "50%"; /* force browser to scrunch the element menu */
-  const numRows = Math.ceil(
-    elementMenuItems.length / ELEMENT_MENU_ELEMENTS_PER_ROW
-  );
-  var elemIdx = 0;
   var i, k;
-  for (i = 0; i < numRows; i++) {
-    const row = elementMenu.insertRow(i);
-    for (k = 0; k < ELEMENT_MENU_ELEMENTS_PER_ROW; k++) {
-      if (elemIdx >= elementMenuItems.length) break;
+  for (var elemIdx = 0; elemIdx < elementMenuItems.length; elemIdx++) {
+    const elemType = elementMenuItems[elemIdx];
+    if (!(elemType in menuNames))
+      throw "element is missing a canonical name: " + elemType;
 
-      const cell = row.insertCell(k);
-      const elemButton = document.createElement("input");
-      cell.appendChild(elemButton);
+    const elemButton = document.createElement("button");
+    elemButton.type = "button";
+    elemButton.className = "elementMenuButton";
+    elemButton.id = elemType;
+    elemButton.title = menuName(elemType);
 
-      elemButton.type = "button";
-      elemButton.className = "elementMenuButton";
+    const elemLabel = document.createElement("span");
+    elemLabel.textContent = menuName(elemType);
+    elemButton.appendChild(elemLabel);
 
-      const elemType = elementMenuItems[elemIdx];
-      if (!(elemType in menuNames))
-        throw "element is missing a canonical name: " + elemType;
-      elemButton.value = menuNames[elemType];
+    /* The element colour doubles as the chip accent; text stays readable. */
+    var elemMenuColor;
+    if (elemType in menuAltColors) elemMenuColor = menuAltColors[elemType];
+    else
+      elemMenuColor =
+        "rgb(" +
+        (elemType & 0xff) +
+        ", " +
+        ((elemType & 0xff00) >>> 8) +
+        ", " +
+        ((elemType & 0xff0000) >>> 16) +
+        ")";
+    elemButton.style.setProperty("--c", elemMenuColor);
 
-      const elemColorRGBA = elemType;
-      elemButton.id = elemColorRGBA;
+    elemButton.addEventListener("click", function () {
+      document
+        .getElementById(SELECTED_ELEM.toString())
+        .classList.remove("selectedElementMenuButton");
+      elemButton.classList.add("selectedElementMenuButton");
+      SELECTED_ELEM = parseInt(elemButton.id, 10);
+    });
 
-      var elemMenuColor;
-      if (elemType in menuAltColors) elemMenuColor = menuAltColors[elemType];
-      else
-        elemMenuColor =
-          "rgb(" +
-          (elemColorRGBA & 0xff) +
-          ", " +
-          ((elemColorRGBA & 0xff00) >>> 8) +
-          ", " +
-          ((elemColorRGBA & 0xff0000) >>> 16) +
-          ")";
-      elemButton.style.color = elemMenuColor;
-
-      elemButton.addEventListener("click", function () {
-        document
-          .getElementById(SELECTED_ELEM.toString())
-          .classList.remove("selectedElementMenuButton");
-        elemButton.classList.add("selectedElementMenuButton");
-        SELECTED_ELEM = parseInt(elemButton.id, 10);
-      });
-
-      elemIdx++;
-    }
+    elementMenu.appendChild(elemButton);
   }
   document.getElementById(SELECTED_ELEM.toString()).click();
 
@@ -172,7 +171,7 @@ function initMenu() {
       const type = SPIGOT_ELEMENT_OPTIONS[k];
       const option = document.createElement("option");
       option.value = type;
-      option.text = menuNames[type];
+      option.text = menuName(type);
       if (i === k) {
         option.selected = "selected";
         SPIGOT_ELEMENTS[i] = type;
@@ -257,6 +256,32 @@ function initMenu() {
   const loadButton = document.getElementById("loadButton");
   loadButton.onclick = loadGameCanvas;
 }
+
+/*
+ * Re-label the element chips and spigot pickers after a language switch.
+ * The simulation state is untouched — only text changes.
+ */
+function refreshMenuLanguage() {
+  const chips = document.querySelectorAll(".elementMenuButton");
+  for (var i = 0; i < chips.length; i++) {
+    const type = parseInt(chips[i].id, 10);
+    const label = menuName(type);
+    chips[i].title = label;
+    const span = chips[i].firstChild;
+    if (span) span.textContent = label;
+    else chips[i].textContent = label;
+  }
+
+  const spigotTypes = document.querySelectorAll(".spigotType");
+  for (var j = 0; j < spigotTypes.length; j++) {
+    const options = spigotTypes[j].options;
+    for (var k = 0; k < options.length; k++) {
+      options[k].text = menuName(parseInt(options[k].value, 10));
+    }
+  }
+}
+
+if (window.MG) MG.onChange(refreshMenuLanguage);
 
 function drawFPSLabel(fps) {
   document.getElementById("fps-counter").innerText = "FPS: " + fps;

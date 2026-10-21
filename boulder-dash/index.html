@@ -1,24 +1,30 @@
-<!DOCTYPE html> 
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
   <title>Boulder Dash · Ricky</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link href="boulderdash.css" media="screen, print" rel="stylesheet" type="text/css" />
-</head> 
+  <link rel="stylesheet" href="../shared/mg.css">
+  <script src="../shared/mg.js"></script>
+</head>
 
-<body> 
+<body>
 
   <div id="boulderdash">
     <div id="header">
-      <img  id='prev' src='images/up.png'   title="previous level">
-      <img  id='next' src='images/down.png' title="next level">
+      <img  id='prev' src='images/up.png'   data-title-zh="上一关" data-title-en="previous level">
+      <img  id='next' src='images/down.png' data-title-zh="下一关" data-title-en="next level">
       <span id="description">Boulderdash</span>
-      <a    id="help" href="help.html">instructions</a>
+      <a    id="help" href="help.html" data-t-zh="图鉴与说明" data-t-en="instructions">instructions</a>
     </div>
     <canvas id="canvas">
       Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
     </canvas>
-    <div id="keys">Use the <b>arrow</b> keys to control Rockford.</div>
+    <div id="keys">
+      <span data-t-zh="用方向键控制 Rockford：挖土、推石头、捡宝石。" data-t-en="Use the arrow keys to control Rockford."></span>
+      <span data-t-zh="PageUp / PageDown 换关，Esc 重开本关。" data-t-en="PageUp / PageDown change level, Esc restarts the cave."></span>
+    </div>
   </div>
 
   <script src="stats.js"></script>
@@ -26,7 +32,57 @@
   <script src="boulderdash.js"></script>
   <script>
     Boulderdash();
+
+    MG.init({
+      id: "boulder-dash",
+      help: {
+        zh: {
+          title: "怎么玩 · Boulder Dash",
+          lead: "C64 上的经典推石解谜。挖开泥土找宝石，把挡路的巨石推开，但石头是会往下掉的 —— 掉在你头上的那块，就是你这条命。",
+          keys: [
+            ["方向键", "移动 / 挖土 / 推石头"],
+            ["PageUp / PageDown", "切换到上一关 / 下一关"],
+            ["Esc", "重开当前这一关"]
+          ],
+          sectionsTitle: "规则",
+          sections: [
+            { h: "目标", p: "每关都有一个宝石指标，屏幕上方会显示还需要多少颗。拿够之后出口打开，走进去过关（还能吃到剩余时间的奖励分）。" },
+            { h: "石头会掉", p: "巨石下面一旦是空的就会下落。往上挖之前先抬头看，头顶悬着石头的时候横向推开它，别从下面钻。" },
+            { h: "两种敌人", p: "萤火虫和蝴蝶碰到就死。萤火虫沿空间边缘逆时针飞，蝴蝶顺时针飞。用石头砸死它们：萤火虫会炸掉周围一圈墙，蝴蝶死后变成一堆宝石 —— 蝴蝶几乎是宝石的主要来源。" },
+            { h: "变形虫与魔墙", p: "变形虫会越长越大，长太大就变成石头，用石头把它围死反而会变成宝石。魔墙能把石头变成宝石，但只在短时间内有效。" }
+          ],
+          tipsTitle: "要点",
+          tips: [
+            "时间有限，先把路线看清楚再动手，别把自己封死。",
+            "石头推过去之后不会回来，通道一旦堵住就得绕路。",
+            "想直接看后面的关卡，用 PageUp / PageDown 跳。"
+          ]
+        },
+        en: {
+          title: "How to play · Boulder Dash",
+          lead: "The C64 pushing-boulders classic. Dig through dirt for diamonds, shove boulders out of the way — but boulders fall, and the one that lands on your head ends the run.",
+          keys: [
+            ["Arrow keys", "Move / dig / push boulders"],
+            ["PageUp / PageDown", "Previous / next cave"],
+            ["Esc", "Restart the current cave"]
+          ],
+          sectionsTitle: "Rules",
+          sections: [
+            { h: "Goal", p: "Each cave has a diamond quota, shown in the HUD. Hit it and the exit opens; walk in to finish, with a bonus for leftover time." },
+            { h: "Boulders fall", p: "A boulder drops as soon as the tile under it is empty. Look up before you dig upward, and push boulders sideways rather than walking underneath." },
+            { h: "Two enemies", p: "Fireflies and butterflies kill on touch. Fireflies circle open space counter-clockwise, butterflies clockwise. Drop a boulder on a firefly and it blasts a hole in the walls; do the same to a butterfly and it turns into diamonds — butterflies are most of your income." },
+            { h: "Amoeba & magic walls", p: "The amoeba keeps growing and turns into boulders if it gets too big, but suffocates into diamonds when you wall it in. Magic walls convert boulders into diamonds for a limited time." }
+          ],
+          tipsTitle: "Tips",
+          tips: [
+            "Time is limited — read the route before you commit, and never seal yourself in.",
+            "A pushed boulder never comes back, so a blocked tunnel means a detour.",
+            "Use PageUp / PageDown to jump to a later cave."
+          ]
+        }
+      }
+    });
   </script>
 
-</body> 
+</body>
 </html>

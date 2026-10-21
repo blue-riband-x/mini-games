@@ -32,12 +32,14 @@ function speak(text, suppress) {
 	// Large texts are split into individual sentences, to avoid long text bug.
 	if (speechEnabled && ENABLE_VOICE) {
 		speechSynth.cancel();
-		var newText = text.split(". ");
+		var isCJK = MG.lang !== "en";
+		var newText = text.split(isCJK ? /。/ : /\.\s+/);
 		newText.forEach(function(t) {
-			var speech = new SpeechSynthesisUtterance(t+".");
+			if (!t) return;
+			var speech = new SpeechSynthesisUtterance(isCJK ? t + "。" : t + ".");
 			speech.rate = 1;
 			speech.pitch = 0.1;
-			speech.lang = "en";
+			speech.lang = isCJK ? "zh-CN" : "en";
 			speechSynth.speak(speech);
 		});
 	}
