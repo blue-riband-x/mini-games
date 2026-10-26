@@ -1,6 +1,6 @@
 # 来源与许可
 
-这个仓库里的四个游戏都是基于开源项目改造的移植版。原项目的版权与许可声明都保留在各自子目录里，
+这个仓库里的五个游戏都是基于开源项目改造的移植版。原项目的版权与许可声明都保留在各自子目录里，
 下面是逐项对照 —— 原仓库、原作者、许可证，以及我实际改动的地方。
 
 ---
@@ -76,11 +76,36 @@
   让外层布局可以自适应；
 - 元素规则、反应与物理步进未改动。
 
+
+## 5. cat-merge — Cat Merge 猫咪合成
+
+- **原作**：[4urie/Cat-Merge-Game](https://github.com/4urie/Cat-Merge-Game)
+- **原作者**：4urie
+- **许可**：代码 MIT（见 `cat-merge/` 同级的 `LICENSE`，取自原作）；**猫的美术素材不在 MIT 范围内**（原作 README 明示）
+- **原作背景**：手帐本画风的合成类小游戏，Next.js + React + Phaser 3，移动端与桌面端共用一套界面。
+
+改动：
+
+- **构建方式换成 Vite**：原作是 Next.js 项目（`app/` + `next/image`），为了能像其它几个游戏一样
+  以纯静态目录挂在同一个 Pages 下，改成了 Vite + React（`src/main.tsx`、`src/components/CatMerge.tsx`），
+  `next/image` 换成原生 `<img>`，`@import "tailwindcss"` 换成等价的最小 reset ——
+  原样式表里没有用到任何 Tailwind 工具类；
+- **素材压缩**：十张 1024×1024 的 PNG（共约 12MB）转成 512×512 WebP（共约 500KB），
+  `CatScene.ts` 里用于裁掉透明边的 `trimmed` 帧坐标按同比例缩放；
+- **中英双语**：界面文案抽到 `src/i18n.ts`，语言存在 `localStorage['mg.lang']`（与 `shared/mg.js` 同一个键，
+  在入口页切过的语言进来仍然生效）；十级猫的名字各给一套中文；「怎么玩」弹窗、结束与重开提示都做了对照；
+- 字体仍然是原作自带的 Lilita One / Patrick Hand（SIL OFL，许可文件在 `cat-merge/fonts/`），
+  中文回退到楷体以保持手帐感；
+- 物理参数、合成规则、计分与结束判定未改动。
+
+> 说明：`public/assets/cats/` 里的猫图版权归原作者，原作明确写了可以看代码但**再分发美术需要授权**。
+> 这里之所以能带着素材跑，是因为本仓库是原作的非商业移植；如果原作者要求，会立即移除这些图片。
+
 ---
 
 ## 许可要点
 
-- **MIT**（tower-defense、boulder-dash）：允许修改与再分发，要求保留原始版权声明与许可文本，已保留。
+- **MIT**（tower-defense、boulder-dash、cat-merge 的代码）：允许修改与再分发，要求保留原始版权声明与许可文本，已保留。
 - **GPL-3.0**（space-huggers、project-sand）：允许修改与再分发，要求衍生作品同样以 GPL-3.0 发布、
   保留原作者署名、并说明修改内容。本文件与各子目录的 LICENSE 即为此目的保留；如需再分发这些子目录的代码，
   请同样遵循 GPL-3.0。

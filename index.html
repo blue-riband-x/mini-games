@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mini Games · Ricky</title>
 <meta name="author" content="Ricky">
-<meta name="description" content="四个能直接在浏览器里玩的小游戏：太空塔防、跑打射击、推石解谜、落沙沙盒。">
+<meta name="description" content="五个能直接在浏览器里玩的小游戏：太空塔防、跑打射击、推石解谜、落沙沙盒、猫咪合成。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305080d'/%3E%3Crect x='6' y='6' width='8' height='8' fill='%235eead4'/%3E%3Crect x='18' y='6' width='8' height='8' fill='%23f2b544'/%3E%3Crect x='6' y='18' width='8' height='8' fill='%239db4c8'/%3E%3Crect x='18' y='18' width='8' height='8' fill='%23e8845f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="shared/mg.css"><script src="shared/mg.js"></script>
 <style>
@@ -66,7 +66,7 @@
     width: 100%; max-width: 1040px;
     margin-top: 30px;
     display: grid; gap: 14px;
-    grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(186px, 1fr));
   }
   a.card {
     position: relative;
@@ -141,9 +141,9 @@
     <div class="eyebrow mono">Mini Games / Static / No Build</div>
     <div id="mgLangSlot"></div>
   </div>
-  <h1><span data-t-zh="四个小游戏，" data-t-en="Four small games, "></span><em data-t-zh="打开就能玩" data-t-en="ready to play"></em></h1>
-  <p class="sub" data-t-zh="都是纯静态页面，没有后端、没有构建步骤，浏览器直接跑。四种完全不同的玩法：塔防、跑打射击、推石解谜、落沙沙盒。"
-     data-t-en="Plain static pages — no backend, no build step, straight into the browser. Four completely different genres: tower defense, run &amp; gun, boulder puzzling, falling-sand sandbox."></p>
+  <h1><span data-t-zh="五个小游戏，" data-t-en="Five small games, "></span><em data-t-zh="打开就能玩" data-t-en="ready to play"></em></h1>
+  <p class="sub" data-t-zh="都是纯静态页面，没有后端，浏览器直接跑。五种完全不同的玩法：塔防、跑打射击、推石解谜、落沙沙盒、猫咪合成。"
+     data-t-en="Plain static pages, no backend — straight into the browser. Five completely different genres: tower defense, run &amp; gun, boulder puzzling, falling-sand sandbox, cat merging."></p>
   <div class="rule"></div>
 </header>
 
@@ -199,11 +199,24 @@
     </div>
     <div class="go mono"><span data-t-zh="进入" data-t-en="Enter"></span> <i></i></div>
   </a>
+
+  <a class="card" href="cat-merge/" style="--tone:#c9b3f5">
+    <div class="no mono">05 / MERGE</div>
+    <h2 class="name"><span data-t-zh="猫咪合成" data-t-en="Cat Merge"></span><small>Cat Merge · Physics Merge</small></h2>
+    <p class="desc" data-t-zh="把猫从上面丢下去，两只一样的碰到一起就合成更大的一只，一路合到第十级。物理引擎负责堆叠：猫会滚、会滑、会卡进缝里，堆过虚线就结束。"
+       data-t-en="Drop cats from above; two matching ones merge into a bigger cat, up to tier ten. A physics engine does the stacking — cats roll, slide and wedge into gaps, and the round ends if the pile crosses the line."></p>
+    <div class="tags">
+      <span data-t-zh="合成" data-t-en="Merge"></span>
+      <span data-t-zh="鼠标 / 触屏" data-t-en="Mouse / touch"></span>
+      <span data-t-zh="手帐画风" data-t-en="Notebook art"></span>
+    </div>
+    <div class="go mono"><span data-t-zh="进入" data-t-en="Enter"></span> <i></i></div>
+  </a>
 </main>
 
 <footer>
   <div>
-    <span data-t-zh="© 2026 Ricky · 四个项目都在仓库" data-t-en="© 2026 Ricky · All four live in the"></span>
+    <span data-t-zh="© 2026 Ricky · 五个项目都在仓库" data-t-en="© 2026 Ricky · All five live in the"></span>
     <a href="https://github.com/blue-riband-x/mini-games" target="_blank" rel="noreferrer">mini-games</a>
     <span data-t-zh="里，来源与许可见" data-t-en="repo; sources and licences in"></span>
     <a href="THIRD-PARTY.md">THIRD-PARTY.md</a>
